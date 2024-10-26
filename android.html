@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+    
+    @media screen and (min-width: 768px) {
+    .phone-container {
+        width: 50%;
+        height: 90vh;
+    }
+    .notification-drawer, .bottom-drawer-container {
+        height: auto; /* keeps them fully visible */
+    }
+    .home-button:hover, .back:hover, .tab:hover {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+    
+    
+        *{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+
+body{
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+.power-button{
+    position: absolute;
+    display: inline-block;
+    width: 3.5px;
+    height: 45px;
+    background: silver;
+    right: 9.2%;
+    top: 40%;
+    box-shadow: inset 0.8px 0px 1px rgba(0,0,0,0.5);
+    border-radius: 0px 1px 1px 0px;
+    
+}
+.phone-container{
+    background: rgba(0,0,0,0.7);
+    border: 0.5px solid dimgray;
+    width: 80%;
+    height: 75%;
+    border-radius: 16px 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 1px 8px 0px 8px;
+    gap: 5px;
+    overflow: hidden;
+    box-shadow: 10px 8px 1px rgba(0,0,0,0.2), inset 3px 3px 1px rgba(255,255,255,0.1), inset -3px -3px 1px rgba(255,255,255,0.1);
+}
+    
+.upper-speaker{
+    display: inline-block;
+    position: relative;
+    width: 18%;
+    border-radius: 0px 0px 4px 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+}
+.upper-speaker::after{
+    content: "";
+    border-radius: 50%;
+    padding: 1px;
+    background: black;
+    border: 0.1px solid silver;
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: 128%;
+}
+.button-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-bottom: 8px;
+    justify-content: center; 
+    align-items: center; 
+    padding: 8px;
+    gap: 5.5rem;
+    opacity: 0.3;
+    transition: 0.3s ease-in-out;
+}
+.buttonOpacity{
+    opacity: 1;
+    filter: brightness(10);
+}
+.home-button{
+    
+    border-radius: 15%;
+    padding: 5px;
+    border: 1.5px solid silver;
+    opacity: 0.6;
+    
+}
+.back{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    opacity: 0.5;
+    
+}
+.tab{
+    opacity: 0.5;
+}
+.phone-screen{
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: url("/Forest Brook.jpeg") rgba(0,49,83,0.9);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    box-shadow: inset 3px 3px 3px rgba(0,0,0,0.4), inset -3px -3px 3px rgba(0,0,0,0.4);
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    align-items: center;
+    
+    filter: brightness(0);
+    transition: 0.3s ease-in-out;
+}
+.top-notification{
+    padding: 3px 8px 1px 8px;
+    display: flex;
+    gap: 5px;
+    z-index: 3;
+    align-items: flex-start;
+    position: absolute;
+    width: 100%;
+    height: 4%;
+    background: rgba(0,0,0,0.3);
+    transition: 0.2s ease-in-out;
+}
+.notification-drawer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    top: -100%;
+    transition: 0.3s ease-in-out;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    opacity: 0;
+    padding: 8px;
+    
+}
+.notification-text{
+    color: lavender;
+    font-family: karla;
+}
+.notification-navbar{
+    margin-top: 30px;
+    background: rgba(59, 68, 75,1);
+    width: 100%;
+    height: 15%;
+    border-radius: 8px;
+}
+.drawer{
+    transform: translateY(100%);
+    opacity: 1; 
+}
+.blurEffect{
+    filter: blur(8px)
+}
+.poweroffandOn{
+    filter: brightness(1);
+}
+.greenLight{
+    background: green;
+}
+#battery{
+    display: block;
+    position: relative;
+    color: rgba(255,255,255,0.7);
+    float: right;
+}
+#signal{
+    display: block;
+    position: relative;
+    color: rgba(255, 255, 255, 0.7);
+    float: right;
+}
+.time{
+    color: rgba(255, 255, 255, 0.7);
+    font-family: karla;
+    position: relative;
+    margin-right: auto;
+}
+.screen-content{
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-end;
+    box-sizing: border-box;
+}
+.boxes{
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.3);
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+}
+.circle-container{
+    
+    position: absolute;
+    display: flex;
+    bottom: 15%;
+    gap: 5px;
+    justify-content: center; 
+    align-items: center; 
+    padding: 3px;
+}
+.circle{
+    width: 35px;
+    padding: 1.5px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    transition: ease-in-out 0.3s;
+}
+.hideit{
+    opacity: 0;
+}
+.treedots{
+    position: absolute;
+    opacity: 0.4;
+}
+.page{
+    
+    
+    position: relative;
+    scroll-snap-align: center;
+    height: max-content;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    padding: 10px;
+    gap: 5px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    z-index: -1;
+}
+.inside-boxes{
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 2px;
+}
+.widget-container{
+    
+    margin-top: 8%;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 30%;
+    
+}
+.widget{
+    position: relative;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border-radius: 18px;
+}
+.search-input{
+    width: 200px;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 8px;
+    border-radius: inherit;
+}
+#micIcon{
+    opacity: 0.7;
+    position: relative;
+    margin-right: 10px;
+    
+}
+.bottom-drawer-container{
+    box-shadow: 0px 2px 0px black;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0,0,0,0.9);
+    
+    bottom: -100%;
+    transition: 0.3s ease-in-out;
+    align-items: flex-start;
+    justify-content: start;
+}
+.bottom-drawer-margin{
+    position: relative;
+    height: 5%;
+    
+    width: 100%;
+}
+.bottom-drawer-search-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 8px;
+}
+.search-apps-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+    background: #303030;
+    border-radius: 5px;
+}
+.input-search-apps{
+    width: 90%;
+    padding: 0px;
+    height: 35px;
+    background: transparent;
+    outline: none;
+    border: none;
+    
+}
+
+.kancel{
+    position: absolute;
+    right: 20px;
+    z-index: -1;
+    font-family: karla;
+    color: lavender;
+}
+.access-bottom-drawer{
+    transform: translateY(-100%);
+}
+.home-button-function{
+    transform: translateY(0%);
+}
+.apps-container{
+    overflow-x: auto;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    align-content: flex-start;
+    gap: 20px;
+}
+.drawer2{/*--75 boxes--*/
+    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    position: relative;
+    background: rgba(255,255,255,0.5);
+}
+.line-container{
+    padding: 5px;
+    width: 100%;
+}
+.line{
+    opacity: 0.3;
+    width: auto;
+}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Esteban&display=swap" rel="stylesheet">
+    <link rel="icon" href="/1728015871086.jpg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>phone</title>
+ 
+</head>
+<div class="power-button">
+    
+</div>
+    <div class="phone-container">
+        
+        <div class="upper-speaker">
+            
+        </div>
+        <div class="phone-screen">
+            <div class="notification-drawer">
+                <div class="notification-navbar">
+                    
+                </div>
+                <span class="notification-text">NO NOTIFICATIONS</span>
+            </div>
+            <div class="widget-container">
+                <div class="widget">
+                    <input placeholder="Search in Google" class="search-input" type="text">
+                    <i id="micIcon" class="fa fa-microphone" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="top-notification">
+                <span class="time">
+                    10:30
+                </span>
+                <i id="signal" class="fa fa-signal" aria-hidden="true"></i>
+                <i id="battery" class="fa fa-battery-three-quarters" aria-hidden="true"></i>
+            </div>
+            <div class="circle-container">
+                <div class="circle">
+                    
+                </div>
+                
+            </div>
+            <div class="screen-content">
+                
+                <div class="page">
+                    <div class="boxes">
+                        <div class="inside-boxes">
+                            
+                        </div>
+                        <div class="inside-boxes">
+                            
+                        </div>
+                        <div class="inside-boxes">
+                            
+                        </div>
+                        <div class="inside-boxes">
+                            
+                        </div>
+                        <div class="inside-boxes">
+                            
+                        </div>
+                    </div>
+                    <div class="boxes">
+                        
+                    </div>
+                    <div class="boxes">
+                        
+                    </div>
+                    <div class="boxes">
+                        
+                    </div>
+                    <div class="boxes">
+                        
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            <div class="bottom-drawer-container">
+                    <div class="bottom-drawer-margin"></div>
+                    
+                    <div class="bottom-drawer-search-container">
+                        <div class="search-apps-container">
+                            <input onfocus="onfukos(this)" onblur="unfukos(this)" class="input-search-apps" type="text">
+                        <span class="kancel">cancel</span>    
+                        </div>
+                    </div>
+                    <div class="line-container">
+                    <hr class="line">
+                    </div>
+                    <div class="apps-container">
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div><div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                        <div class="drawer2"></div>
+                    </div>
+            </div>
+
+
+        </div>
+            <div class="button-container">
+                <div class="tab">
+                    <img width="16px" src="/menus.png">
+                </div>
+                <div class="home-button"></div>
+                <div class="back">
+                    <img width="13px" src="/play-button.png">
+                </div>
+            </div>
+        
+    </div> 
+
+
+
+<body>
+
+    <div class="shadow"></div>
+
+
+
+
+
+
+
+</body>
+
+
+<script>
+    let powerButton = document.querySelector(".power-button");
+
+let phoneScreen = document.querySelector(".phone-screen");
+
+let scroll = document.querySelector(".screen-container");
+
+let notification = document.querySelector(".top-notification");
+
+let blackscreen = document.querySelector("#blackscreen");
+
+
+
+
+
+powerButton.onclick = () => {
+    phoneScreen.classList.toggle("poweroffandOn");
+    document.querySelector(".button-container").classList.toggle("buttonOpacity");
+    
+}
+
+notification.onclick =()=>{
+    document.querySelector(".notification-drawer").style.transform="translateY(100%)";
+    document.querySelector(".notification-drawer").style.opacity="1";
+    
+    document.querySelector(".circle").style.opacity="0";
+    
+}
+
+document.querySelector(".circle").onclick=()=>{
+    document.querySelector(".bottom-drawer-container").style.transform="translateY(-100%)";
+    document.querySelector(".circle").style.opacity="0";
+    
+}
+document.querySelector(".home-button").onclick=()=>{
+    document.querySelector(".bottom-drawer-container").style.transform="translateY(0%)";
+    document.querySelector(".circle").style.opacity="1";
+    document.querySelector(".notification-drawer").style.transform="translateY(0%)";
+}
+document.querySelector(".back").onclick =()=>{
+    document.querySelector(".bottom-drawer-container").style.transform="translateY(0%)";
+    document.querySelector(".circle").style.opacity="1";
+    document.querySelector(".notification-drawer").style.transform="translateY(0%)";
+}
+    
+function onfukos(obj) {
+    document.querySelector(".search-apps-container").style.background="black";
+    document.querySelector(".search-apps-container").style.width="75%";
+    document.querySelector(".input-search-apps").style.color="white";
+}
+function unfukos(obj) {
+    document.querySelector(".search-apps-container").style.background="";
+    document.querySelector(".search-apps-container").style.width="100%";
+    document.querySelector(".input-search-apps").style.color="white";
+}
+
+document.querySelector(".kancel").onclick=()=>{
+    document.querySelector(".input-search-apps").value = "";
+    alert("jrjdjeje")
+}
+
+// Function to display the current time
+function displayCurrentTime() {
+    const now = new Date();
+    document.querySelector(".time").innerHTML=now.toLocaleTimeString();
+}
+
+// Set an interval to call the function every second (1000 milliseconds)
+const intervalId = setInterval(displayCurrentTime, 1000);
+
+// Optional: Stop the interval after 10 seconds
+//setTimeout(() => {
+//    clearInterval(intervalId);
+//    console.log("Interval cleared.");
+//}, 10000);
+</script>
+</html>
